@@ -6,6 +6,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class WebDriverFactory {
@@ -15,6 +16,7 @@ public class WebDriverFactory {
         return switch (browser) {
             case "chrome" -> new ChromeDriver((ChromeOptions) new ChromeSettings().settings(optionsArguments));
             case "firefox" -> new FirefoxDriver();
+            case "edge" -> new EdgeDriver();
             default -> throw new BrowserNotSupportedException(browser);
         };
     }
@@ -26,6 +28,9 @@ public class WebDriverFactory {
                 break;
             case "firefox":
                 WebDriverManager.firefoxdriver().setup();
+                break;
+            case "edge":
+                WebDriverManager.edgedriver().setup();
                 break;
             default:
                 throw new BrowserNotSupportedException(browser);

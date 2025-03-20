@@ -1,12 +1,24 @@
-package MainPage.optionsfree;
+package CatalogPage.optionsfree;
 
+import components.CatalogCoursesFilterSection;
 import factory.WebDriverFactory;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import pages.MainPage;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.CatalogCoursesPage;
+import waiter.CustomWaiter;
+
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class OptionsFree_Test {
     private static final WebDriverFactory webDriverFactory = new WebDriverFactory();
@@ -22,24 +34,13 @@ public class OptionsFree_Test {
         driver = webDriverFactory.create();
     }
 
-    @Test
-    public void check() throws InterruptedException {
-        MainPage page = new MainPage(driver);
-        page.open();
-
-        Thread.sleep(3000);
-    }
 
 
 
     @AfterEach
     public void driverClose(){
         if (driver != null) {
-            driver.close();
             driver.quit();
         }
     }
-
-
-
 }
