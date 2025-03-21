@@ -2,11 +2,10 @@ package pages;
 
 import annotations.Path;
 import data.CourseCategoryData;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import pages.catalog.CatalogCoursesPage;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 

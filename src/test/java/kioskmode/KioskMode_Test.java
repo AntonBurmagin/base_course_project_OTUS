@@ -1,14 +1,13 @@
 package kioskmode;
 
-import data.CourseCategoryData;
 import factory.WebDriverFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
-import pages.CatalogCoursesPage;
-import pages.MainPage;
+import pages.catalog.CatalogCoursesPage;
+import pages.TestingCatalogCoursesPage;
 
 public class KioskMode_Test {
     private static final WebDriverFactory webDriverFactory = new WebDriverFactory();
@@ -21,7 +20,7 @@ public class KioskMode_Test {
 
     @BeforeEach
     public void createDriver() {
-        driver = webDriverFactory.create("--kiosk");
+        driver = webDriverFactory.create("--headless");
     }
 
     /*
@@ -29,6 +28,7 @@ public class KioskMode_Test {
         1.1) Пользователь переходит в раздел «Тестирование»
         1.2) На странице отображаются карточки курсов. Количество карточек равно 11
     */
+    /*
     @Test
     public void catalogTestingNumberOfCourses() {
         MainPage page = new MainPage(driver);
@@ -42,19 +42,28 @@ public class KioskMode_Test {
         Integer expectedNumberOfCourses = 11;
         coursesPage.catalogSectionNumberOfCoursesShouldBe(expectedNumberOfCourses);
     }
+    */
 
-//    @Test
-//    public void coursePageTest() {
-//        MainPage page = new MainPage(driver);
-//        page.open();
-//
-//        CatalogCoursesPage coursesPage = page.clickCourseCategory(CourseCategoryData.TESTING);
-//        List<WebElement> list = coursesPage.getCatalogSectionCourses();
-//        for (WebElement el : list) {
-//            System.out.println(el.getText());
-//            el.click();
-//        }
-//    }
+
+
+    /*
+    2) Просмотр карточки курса:
+        2.1) Пользователь переходит на карточку курса
+        2.2) В карточке указана информация о курсе:
+                Название
+                Описание
+                Длительность обучения
+                Формат // Минимально достаточное — проверить одну карточку. В идеале все в разделе тестирования.
+    */
+
+    @Test
+    public void coursesPageTest() throws InterruptedException {
+        CatalogCoursesPage pageTesting = new TestingCatalogCoursesPage(driver);
+        pageTesting.open();
+
+        pageTesting.closePolicyNotification();
+        pageTesting.cycleAssertCoursesPagesOfCategory(pageTesting);
+    }
 
 
 

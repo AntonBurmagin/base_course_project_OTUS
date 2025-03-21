@@ -1,4 +1,4 @@
-package pages;
+package pages.catalog;
 
 import annotations.Path;
 import components.CatalogCoursesFilterSection;
@@ -6,12 +6,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import pages.AbsBasePage;
+import pages.TestingCatalogCoursesPage;
+import pages.catalog.coursepages.AbsCoursePage;
 
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-//@Path("/catalog/courses?categories=testing")
+
 @Path("/catalog/courses")
 public class CatalogCoursesPage extends AbsBasePage {
 
@@ -20,8 +23,7 @@ public class CatalogCoursesPage extends AbsBasePage {
     }
 
 
-    //selectors
-//    private final By catalogSectionLocator = By.xpath("//div/text()[. =\"Каталог\"]/ancestor::section");
+    //locators
     private final By catalogCoursesSectionSelector = By.cssSelector("main section + section");
     By showMoreButtonLocator = By.xpath("//button[contains(text(),'Показать еще')]");
 
@@ -49,6 +51,34 @@ public class CatalogCoursesPage extends AbsBasePage {
     public void scrollCatalogCourses(){
         while(waiter.waitForConditionNoLogger(ExpectedConditions.visibilityOfElementLocated(showMoreButtonLocator)))
             driver.findElement(showMoreButtonLocator).click();
+    }
+
+    public AbsCoursePage clickCourse(WebElement course) {
+        waiter.waitForCondition(ExpectedConditions.elementToBeClickable(course));
+        course.click();
+        return new AbsCoursePage(driver);
+    }
+
+    public void cycleAssertCoursesPagesOfCategory(CatalogCoursesPage pageTesting) {
+        scrollCatalogCourses();
+        int numberOfCourses = getCatalogSectionCourses().size();
+        for (int i = 0; i < numberOfCourses; i++) {
+            if (i >= getCatalogSectionCourses().size())
+                scrollCatalogCourses();
+
+        AbsCoursePage coursePage = clickCourse(getCatalogSectionCourses().get(i));
+
+        if (coursePage.isCoursePage()) {
+            coursePage.titleShouldPresent();
+            coursePage.descriptionShouldPresent();
+            coursePage.durationShouldPresent();
+        } else {
+            logger.info(String.format("%s isn't course page", driver.getCurrentUrl()));
+        }
+
+        driver.navigate().back();
+        pageTesting = new TestingCatalogCoursesPage(driver);
+        }
     }
 
 
