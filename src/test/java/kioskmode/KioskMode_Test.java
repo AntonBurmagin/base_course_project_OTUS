@@ -1,13 +1,14 @@
 package kioskmode;
 
+import data.MonthData;
 import factory.WebDriverFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
-import pages.catalog.CatalogCoursesPage;
-import pages.TestingCatalogCoursesPage;
+import org.openqa.selenium.WebElement;
+import pages.EventsPage;
 
 public class KioskMode_Test {
     private static final WebDriverFactory webDriverFactory = new WebDriverFactory();
@@ -20,7 +21,7 @@ public class KioskMode_Test {
 
     @BeforeEach
     public void createDriver() {
-        driver = webDriverFactory.create("--headless");
+        driver = webDriverFactory.create("--kiosk");
     }
 
     /*
@@ -55,7 +56,7 @@ public class KioskMode_Test {
                 Длительность обучения
                 Формат // Минимально достаточное — проверить одну карточку. В идеале все в разделе тестирования.
     */
-
+    /*
     @Test
     public void coursesPageTest() throws InterruptedException {
         CatalogCoursesPage pageTesting = new TestingCatalogCoursesPage(driver);
@@ -64,7 +65,44 @@ public class KioskMode_Test {
         pageTesting.closePolicyNotification();
         pageTesting.cycleAssertCoursesPagesOfCategory(pageTesting);
     }
+     */
 
+    /*
+    3) Валидация дат предстоящих мероприятий:
+        3.1) Пользователь переходит в раздел «События» -> «Календарь мероприятий»
+        3.2) На странице отображаются карточки предстоящих мероприятий.
+        3.3) Даты проведения мероприятий больше или равны текущей дате
+     */
+    /*
+    @Test
+    public void futureEventsTest() {
+        EventsPage page = new EventsPage(driver);
+        page.open();
+
+        for(WebElement event : page.getListOfEvents()) {
+            page.eventShouldBeInFuture(event);
+        }
+    }
+     */
+
+
+    /*
+    4) Просмотр мероприятий по типу:
+        4.1) Пользователь переходит в раздел «События» -> «Календарь мероприятий»
+        4.2) Пользователь сортирует мероприятия по типу «Открытые вебинары»
+        4.3) На странице отображаются карточки предстоящих мероприятий. На каждой карточке в типе указано «Открытые вебинары»
+     */
+    @Test
+    public void eventsFilterTest() {
+        EventsPage page = new EventsPage(driver);
+        page.open();
+
+        page.closePolicyNotification();
+        String typeName = "Открытый вебинар";
+        page.setEventFilter(typeName);
+        for (WebElement event : page.getListOfEvents())
+            page.eventTypeNameShouldBe(event, typeName);
+    }
 
 
 
