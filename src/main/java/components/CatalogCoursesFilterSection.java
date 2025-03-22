@@ -15,10 +15,11 @@ public class CatalogCoursesFilterSection extends AbsComponent{
 
     public CatalogCoursesFilterSection(WebDriver driver) {
         super(driver);
-//        waiter.waitForCondition(ExpectedConditions.visibilityOf(driver.findElement(getComponentBy())));
+        waiter.waitForCondition(ExpectedConditions.visibilityOf(driver.findElement(getComponentBy())));
         catalogCoursesFilter = driver.findElement(getComponentBy());
     }
-    //
+
+
     public String getString(){
         return catalogCoursesFilter.getText();
     }
@@ -52,10 +53,6 @@ public class CatalogCoursesFilterSection extends AbsComponent{
             if (options.contains(it.findElement(By.cssSelector("label")).getText().toLowerCase())) {
                 if (!it.findElement(By.cssSelector("input")).isSelected()) {
                     it.findElement(By.cssSelector("input")).click();
-                    waiter.waitForCondition(ExpectedConditions.elementSelectionStateToBe(it.findElement(By.cssSelector("input")), true));
-                    System.out.println(it.findElement(By.cssSelector("input")).isSelected());
-                    waiter.waitForCondition(ExpectedConditions.urlContains("testing"));
-                    System.out.println(waiter.waitForCondition(ExpectedConditions.urlContains("testing")));
                 }
             }
         }

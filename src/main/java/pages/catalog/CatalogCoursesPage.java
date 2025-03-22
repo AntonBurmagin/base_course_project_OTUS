@@ -1,13 +1,12 @@
 package pages.catalog;
 
 import annotations.Path;
-import components.CatalogCoursesFilterSection;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.AbsBasePage;
-import pages.TestingCatalogCoursesPage;
+import pages.catalog.coursepages.TestingCatalogCoursesPage;
 import pages.catalog.coursepages.AbsCoursePage;
 
 import java.util.List;
@@ -38,14 +37,9 @@ public class CatalogCoursesPage extends AbsBasePage {
         return getCatalogSection().findElements(By.cssSelector("a"));
     }
 
-
-    public void catalogSectionNumberOfCoursesShouldBe(Integer expected){
+    public void catalogSectionNumberOfCoursesShouldBeEqual(Integer expected){
         assertThat(getCatalogSectionCourses().size()).isEqualTo(expected);
         logger.info("Number of courses of page {} is correct. Expected {}, actual {}.", driver.getCurrentUrl(), expected, getCatalogSectionCourses().size());
-    }
-
-    public CatalogCoursesFilterSection getFilterSection() {
-        return new CatalogCoursesFilterSection(driver);
     }
 
     public void scrollCatalogCourses(){
@@ -59,25 +53,32 @@ public class CatalogCoursesPage extends AbsBasePage {
         return new AbsCoursePage(driver);
     }
 
-    public void cycleAssertCoursesPagesOfCategory(CatalogCoursesPage pageTesting) {
+    public void coursePageAssertInfo(AbsCoursePage coursePage) {
+        if (coursePage.isCoursePage()) {
+            coursePage.titleShouldPresent();
+            coursePage.descriptionShouldPresent();
+            coursePage.durationShouldPresent();
+        } else {
+            logger.info("{} ---is--- FREE course (different page structure).", driver.getCurrentUrl());
+        }
+    }
+
+    public void cycleAssertCoursesPagesInfo(CatalogCoursesPage pageTesting) {
         scrollCatalogCourses();
         int numberOfCourses = getCatalogSectionCourses().size();
         for (int i = 0; i < numberOfCourses; i++) {
             if (i >= getCatalogSectionCourses().size())
                 scrollCatalogCourses();
 
-        AbsCoursePage coursePage = clickCourse(getCatalogSectionCourses().get(i));
+            By chatCloseSelector= By.cssSelector("#jivo_close_button");
+            if (waiter.waitForConditionNoLogger(ExpectedConditions.visibilityOfElementLocated(chatCloseSelector)))
+                driver.findElement(chatCloseSelector).click();
 
-        if (coursePage.isCoursePage()) {
-            coursePage.titleShouldPresent();
-            coursePage.descriptionShouldPresent();
-            coursePage.durationShouldPresent();
-        } else {
-            logger.info(String.format("%s isn't course page", driver.getCurrentUrl()));
-        }
+            AbsCoursePage coursePage = clickCourse(getCatalogSectionCourses().get(i));
+            coursePageAssertInfo(coursePage);
 
-        driver.navigate().back();
-        pageTesting = new TestingCatalogCoursesPage(driver);
+            driver.navigate().back();
+            pageTesting = new TestingCatalogCoursesPage(driver);
         }
     }
 

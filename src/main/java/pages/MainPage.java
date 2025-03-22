@@ -7,7 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.catalog.CatalogCoursesPage;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @Path("")
 public class MainPage extends AbsBasePage{
@@ -20,7 +19,8 @@ public class MainPage extends AbsBasePage{
     public CatalogCoursesPage clickCourseCategory(CourseCategoryData courseCategory) {
         By categoryLocator = By.xpath(String.format("//main//a[text()=\"%s\"]", courseCategory.getName()));
 
-        waiter.waitForCondition(ExpectedConditions.visibilityOfElementLocated(categoryLocator));
+        closePolicyNotification();
+        waiter.waitForCondition(ExpectedConditions.elementToBeClickable(categoryLocator));
         driver.findElement(categoryLocator).click();
         return new CatalogCoursesPage(driver);
     }

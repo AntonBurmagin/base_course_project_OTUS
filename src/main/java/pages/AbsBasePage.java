@@ -29,7 +29,7 @@ public abstract class AbsBasePage extends AbsCommon {
     }
 
     public void closePolicyNotification(){
-        By cookiePolicyNotificationLocator = By.xpath("//div//span[text()=\"Посещая наш сайт, вы принимаете\"]//..//button");
+        By cookiePolicyNotificationLocator = By.xpath("//div//*[contains(text(),'Посещая наш сайт, вы принимаете')]//..//button");
         if(waiter.waitForConditionNoLogger(ExpectedConditions.visibilityOfElementLocated(cookiePolicyNotificationLocator)))
             driver.findElement(cookiePolicyNotificationLocator).click();
     }

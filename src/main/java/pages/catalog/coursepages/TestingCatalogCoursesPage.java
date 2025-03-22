@@ -1,4 +1,4 @@
-package pages;
+package pages.catalog.coursepages;
 
 import annotations.Path;
 import org.openqa.selenium.WebDriver;

@@ -51,10 +51,13 @@ public class EventsPage extends AbsBasePage {
     }
 
     public void setEventFilter(String typeName){
+        By filterArrowSelector = By.cssSelector(".dod_new-events-dropdown__input");
         By typeFilterSelector = By.cssSelector(String.format(".dod_new-events__header-left [title=\"%s\"]", typeName));
 
-        WebElement arrow = driver.findElement(By.cssSelector(".dod_new-events-dropdown__input"));
-        arrow.click();
+        waiter.waitForCondition(ExpectedConditions.visibilityOfElementLocated(filterArrowSelector));
+        driver.findElement(filterArrowSelector).click();
+
+        waiter.waitForCondition(ExpectedConditions.visibilityOfElementLocated(typeFilterSelector));
         driver.findElement(typeFilterSelector).click();
     }
 
