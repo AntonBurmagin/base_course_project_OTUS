@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.AbsBasePage;
+import pages.catalog.coursepages.FreeCourse;
+import pages.catalog.coursepages.LessonCourse;
 import pages.catalog.coursepages.TestingCatalogCoursesPage;
 import pages.catalog.coursepages.AbsCoursePage;
 
@@ -50,17 +52,16 @@ public class CatalogCoursesPage extends AbsBasePage {
     public AbsCoursePage clickCourse(WebElement course) {
         waiter.waitForCondition(ExpectedConditions.elementToBeClickable(course));
         course.click();
-        return new AbsCoursePage(driver);
+        if (driver.getCurrentUrl().contains("lessons"))
+            return new LessonCourse(driver);
+
+        return new FreeCourse(driver);
     }
 
     public void coursePageAssertInfo(AbsCoursePage coursePage) {
-        if (coursePage.isCoursePage()) {
-            coursePage.titleShouldPresent();
-            coursePage.descriptionShouldPresent();
-            coursePage.durationShouldPresent();
-        } else {
-            logger.info("{} ---is--- FREE course (different page structure).", driver.getCurrentUrl());
-        }
+        coursePage.titleShouldPresent();
+        coursePage.descriptionShouldPresent();
+        coursePage.durationShouldPresent();
     }
 
     public void cycleAssertCoursesPagesInfo(CatalogCoursesPage pageTesting) {

@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.catalog.CatalogCoursesPage;
 
 
-@Path("")
+@Path("/")
 public class MainPage extends AbsBasePage{
 
     public MainPage(WebDriver driver) {

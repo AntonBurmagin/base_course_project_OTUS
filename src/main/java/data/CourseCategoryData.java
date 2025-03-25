@@ -1,9 +1,7 @@
 package data;
 
 public enum CourseCategoryData {
-    TESTING("Тестирование"),
-    PROGRAMMING("Программирование"),
-    ARCHITECTURE("Архитектура");
+    TESTING("Тестирование");
 
     private String name;
 

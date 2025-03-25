@@ -21,7 +21,7 @@ public class KioskMode_Test {
 
     @BeforeEach
     public void createDriver() {
-        driver = webDriverFactory.create("--kiosk");
+        driver = webDriverFactory.create();
     }
 
 

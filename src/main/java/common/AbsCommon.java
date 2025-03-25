@@ -14,7 +14,6 @@ public abstract class AbsCommon {
     public AbsCommon(WebDriver driver){
         this.driver = driver;
         this.waiter = new CustomWaiter(driver, logger);
-//        PageFactory.initElements(driver, this);
     }
 
 }
