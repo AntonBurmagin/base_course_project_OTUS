@@ -11,6 +11,8 @@ import pages.MainPage;
 import pages.catalog.coursepages.TestingCatalogCoursesPage;
 import pages.catalog.CatalogCoursesPage;
 
+import java.io.IOException;
+
 public class OptionsFree_Test {
     private static final WebDriverFactory webDriverFactory = new WebDriverFactory();
     private WebDriver driver = null;
@@ -57,7 +59,7 @@ public class OptionsFree_Test {
             Формат // Минимально достаточное — проверить одну карточку. В идеале все в разделе тестирования.
     */
     @Test
-    public void coursesPageTest() throws InterruptedException {
+    public void coursesPageTest() throws InterruptedException, IOException {
         CatalogCoursesPage pageTesting = new TestingCatalogCoursesPage(driver);
         pageTesting.open();
 

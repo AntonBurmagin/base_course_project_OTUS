@@ -22,6 +22,7 @@
 
         <compiler.version>3.13.0</compiler.version>
         <surefire.version>3.5.2</surefire.version>
+        <jsoup.version>1.19.1</jsoup.version>
     </properties>
 
     <dependencies>
@@ -54,6 +55,12 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>${assertj.version}</version>
+        </dependency>
+        <dependency>
+            <!-- jsoup HTML parser library @ https://jsoup.org/ -->
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${jsoup.version}</version>
         </dependency>
     </dependencies>
 

@@ -11,6 +11,7 @@ import pages.catalog.coursepages.LessonCourse;
 import pages.catalog.coursepages.TestingCatalogCoursesPage;
 import pages.catalog.coursepages.AbsCoursePage;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -49,7 +50,7 @@ public class CatalogCoursesPage extends AbsBasePage {
             driver.findElement(showMoreButtonLocator).click();
     }
 
-    public AbsCoursePage clickCourse(WebElement course) {
+    public AbsCoursePage clickCourse(WebElement course) throws IOException {
         waiter.waitForCondition(ExpectedConditions.elementToBeClickable(course));
         course.click();
         if (driver.getCurrentUrl().contains("lessons"))
@@ -64,7 +65,7 @@ public class CatalogCoursesPage extends AbsBasePage {
         coursePage.durationShouldPresent();
     }
 
-    public void cycleAssertCoursesPagesInfo(CatalogCoursesPage pageTesting) {
+    public void cycleAssertCoursesPagesInfo(CatalogCoursesPage pageTesting) throws IOException {
         scrollCatalogCourses();
         int numberOfCourses = getCatalogSectionCourses().size();
         for (int i = 0; i < numberOfCourses; i++) {
